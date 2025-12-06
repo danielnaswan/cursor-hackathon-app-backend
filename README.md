@@ -1,314 +1,174 @@
-# cursor-hackathon-app-backend
----
+# 🚭 SmokeLess AI — Backend API
 
-# 🚀 SmokeLess AI — Backend (Non-IoT Version)
+AI-powered behavioral analytics system that helps users track and reduce smoking/vaping habits. Users log vaping/smoking events manually, and the system generates **AI-driven usage analytics, craving predictions, and personalized habit-reduction coaching.**
 
-AI-powered behavioral analytics system that helps users track and reduce smoking/vaping habits.
-Users log vaping/smoking events manually, and the system generates **AI-driven usage analytics, craving predictions, and personalized habit-reduction coaching.**
-
----
-
-# 📌 Project Overview
-
-This is **Phase 1 (Backend-first)** of a 4-developer hackathon project.
-The backend provides:
-
-* Authentication + User Profiles
-* Vape/Smoke Intake Logging API
-* Analytics Engine (aggregation + trend modeling)
-* AI Insights Generator
-* AI Habit Coach Endpoint
-* Event Prediction Engine (craving probability)
-* Admin dashboard APIs (future-proof)
-
-No IoT hardware is required in this phase.
+![Node.js](https://img.shields.io/badge/Node.js-18+-green)
+![Express](https://img.shields.io/badge/Express-4.x-lightgrey)
+![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green)
+![License](https://img.shields.io/badge/License-MIT-blue)
 
 ---
 
-# ⚙️ Tech Stack
+## ✨ Features
 
-**Runtime:** Node.js (LTS)
-**Framework:** Express.js
-**Database:** MongoDB + Mongoose
-**AI Layer:**
-
-* Lindy (coaching logic)
-* Cursor (backend codegen)
-* Apify (scraping motivational content / habit reduction knowledge)
-* Coderabbit (PR automation)
+- 🔐 JWT Authentication
+- 📝 Intake Logging with Gamification
+- 📊 Analytics Engine (Daily/Weekly/Monthly)
+- 🤖 AI Insights & Coaching
+- 🔮 Craving Prediction
+- 🎮 Gamification (Streaks, XP, Achievements)
+- 💊 Health Tracking & Money Saved Calculator
 
 ---
 
-# 📦 Backend Dependencies (Strict List — No Deviations)
+## 📋 Prerequisites
 
-These should be installed exactly as listed for agentic AI repeatability:
-
-## Core
-
-```
-express
-cors
-dotenv
-helmet
-morgan
-compression
-```
-
-## Database
-
-```
-mongoose
-mongodb-memory-server   // for testing only
-```
-
-## Authentication
-
-```
-jsonwebtoken
-bcryptjs
-cookie-parser
-express-rate-limit
-```
-
-## AI Layer
-
-```
-axios
-zod         // schema validation for AI payloads
-uuid
-```
-
-## Utilities
-
-```
-dayjs
-lodash
-winston     // logging
-```
-
-## Dev Tools
-
-```
-nodemon
-eslint
-prettier
-jest
-supertest
-```
+- **Node.js** 18.0 or higher
+- **MongoDB Atlas** account (or local MongoDB)
+- **Git**
+- **npm** (comes with Node.js)
 
 ---
 
-# 🏗️ Backend Architecture
+## 🚀 Installation
 
-```
-/src
-  /config
-  /controllers
-  /routes
-  /models
-  /services
-     ai.service.js
-     analytics.service.js
-     prediction.service.js
-  /middleware
-  /utils
-  /tests
+### Step 1: Clone Repository
+
+```bash
+git clone https://github.com/YOUR_USERNAME/cursor-hackathon-app-backend.git
+cd cursor-hackathon-app-backend
 ```
 
----
+### Step 2: Install Dependencies
 
-# 📡 Core API Endpoints (Strict Contract)
+```bash
+npm install
+```
 
-## AUTH
+### Step 3: Environment Setup
 
-POST `/auth/register`
-POST `/auth/login`
-POST `/auth/logout`
+Create a `.env` file in the root directory:
 
-## USER
+```bash
+touch .env
+```
 
-GET `/user/me`
-PATCH `/user/update`
+> ⚠️ **Note:** The `.env` file contains sensitive API keys and is **not included** in this repository.
+> 
+> **To get the environment variables, please contact:**
+> - 📧 Email: [YOUR_EMAIL]
+> - 💬 Discord: [YOUR_DISCORD]
 
-## INTAKE LOGGING
+### Step 4: Run Server
 
-POST `/intake/log`
-GET `/intake/user/:id`
-DELETE `/intake/:logId`
+```bash
+# Development mode (with auto-reload)
+npm run dev
 
-**Payload (Manual Vaping Log):**
+# Production mode
+npm start
+```
+
+### Step 5: Verify Installation
+
+Visit `http://localhost:5000/health` in your browser. You should see:
 
 ```json
 {
-  "puffs": 1,
-  "intensity": "low|medium|high",
-  "context": "stress|bored|habit|social|other",
-  "notes": "optional"
+  "status": "ok",
+  "timestamp": "2025-12-06T00:00:00.000Z"
 }
 ```
 
-## ANALYTICS
+---
 
-GET `/analytics/daily/:userId`
-GET `/analytics/weekly/:userId`
-GET `/analytics/monthly/:userId`
+## 🔑 Environment Variables
 
-## AI COACH
+Required environment variables (contact maintainer for `.env` file):
 
-POST `/ai/insights`
-POST `/ai/coaching`
-
-## AI PREDICTION
-
-GET `/ai/predict-craving/:userId`
+- `MONGO_URI` - MongoDB connection string
+- `JWT_SECRET` - Secret key for JWT tokens
+- `AI_API_KEY` - OpenAI or Claude API key (optional)
+- `PORT` - Server port (default: 5000)
+- `CORS_ORIGIN` - Allowed CORS origin
 
 ---
 
-# 🎯 Tasks Split for 4 Developers (No Overlap)
+## 📡 API Endpoints
+
+### Authentication
+- `POST /api/auth/register` - Register new user
+- `POST /api/auth/login` - Login user
+- `POST /api/auth/logout` - Logout user
+
+### User
+- `GET /api/user/me` - Get current user profile
+- `PATCH /api/user/update` - Update user profile
+
+### Intake Logging
+- `POST /api/intake/log` - Log intake event
+- `GET /api/intake/user/:id` - Get user intakes
+- `DELETE /api/intake/:logId` - Delete intake log
+
+### Analytics
+- `GET /api/analytics/daily/:userId` - Daily statistics
+- `GET /api/analytics/weekly/:userId` - Weekly statistics
+- `GET /api/analytics/monthly/:userId` - Monthly statistics
+
+### AI Features
+- `POST /api/ai/insights` - Generate AI insights
+- `POST /api/ai/coaching` - Get AI coaching plan
+- `GET /api/ai/predict-craving/:userId` - Predict craving probability
+
+### Gamification
+- `GET /api/gamification/stats` - Get gamification stats
+- `GET /api/gamification/achievements` - Get achievements
+- `GET /api/gamification/leaderboard` - Get leaderboard
+- `POST /api/gamification/set-baseline` - Set reduction baseline
+- `GET /api/gamification/reduction` - Get reduction progress
+
+### Health Tracking
+- `GET /api/health/milestones` - Get health milestones (public)
+- `GET /api/health/dashboard` - Get health dashboard
+- `POST /api/health/quit-date` - Set quit date
+- `POST /api/health/cost-settings` - Set cost settings
+- `GET /api/health/money-saved` - Get money saved
+- `GET /api/health/progress` - Get health progress
 
 ---
 
-# 👤 **Developer 1 — Backend Infrastructure + Auth Lead**
+## 🧪 API Tester
 
-### Responsibilities
-
-* Project initialization (`express`, folder structure, env setup)
-* Implement JWT auth
-* Rate limiting + CORS + Helmet + Logging
-* User model + controllers
-* `/auth/*` endpoints
-* `/user/*` endpoints
-* Global error handler
-* Logging system (Winston)
-
-### Deliverables
-
-* `src/server.js`
-* `src/config/` (db, env, logger)
-* `src/routes/auth.routes.js`
-* `src/controllers/auth.controller.js`
-
----
-
-# 👤 **Developer 2 — Intake & Storage Lead (Core Data Flow)**
-
-### Responsibilities
-
-* Intake model + schema
-* Intake CRUD endpoints
-* Validate logs using Zod
-* Ensure strict timestamp handling (DayJS)
-* Query optimization + indexes
-* Data cleanup utilities
-
-### Deliverables
-
-* `src/models/intake.model.js`
-* `src/routes/intake.routes.js`
-* `src/controllers/intake.controller.js`
-* Zod schemas for validation
-
----
-
-# 👤 **Developer 3 — Analytics & Prediction Engine Lead**
-
-### Responsibilities
-
-* Daily/weekly/monthly aggregation
-* Usage heatmaps (hour-of-day calculation)
-* Craving prediction engine
-
-  * Based on intake frequency
-  * Rolling average
-  * Weighted context
-* Trend modeling (last 7 days slope)
-* Output JSON for frontend charts
-
-### Deliverables
-
-* `src/services/analytics.service.js`
-* `src/services/prediction.service.js`
-* `/analytics/*` routes
-
----
-
-# 👤 **Developer 4 — AI Insights & Habit Coach Lead**
-
-### Responsibilities
-
-* AI prompt engineering
-* Integrate Lindy / OpenAI API wrapper
-* Generate insights:
-
-  * “Most active hour”
-  * “Stress correlation”
-  * “Reduction opportunity”
-* Generate coaching plan:
-
-  * Daily habit target
-  * Craving advice
-  * Personalized action steps
-* Integrate Apify scraper for motivation data
-
-### Deliverables
-
-* `src/services/ai.service.js`
-* `/ai/insights`
-* `/ai/coaching`
-
----
-
-# 🚀 Run Instructions
-
+Interactive API tester available at:
 ```
-npm install
-npm run dev
-```
-
-Environment variables (strict):
-
-```
-PORT=5000
-MONGO_URI=mongodb://localhost:27017/smokeless
-JWT_SECRET=supersecuresecret
-AI_API_KEY=your_key_here
+http://localhost:5000/api-tester.html
 ```
 
 ---
 
-# 🧪 Tests (Required for All Teams)
+## 📜 Available Scripts
 
-Use Jest + Supertest:
-
-* Auth test
-* Intake logging test
-* Analytics aggregation test
-* AI service mock test
-
----
-
-# 🗂️ Milestones (For Hackathon Execution)
-
-### **Day 1:**
-
-* Backend skeleton + Auth logic
-* Intake endpoints complete
-
-### **Day 2:**
-
-* Analytics engine + Prediction
-* AI prompt design
-
-### **Day 3:**
-
-* AI coaching + insights
-* Final API testing + cleanup
-* Deploy (Railway / Render)
+```bash
+npm run dev      # Start development server
+npm start        # Start production server
+npm test         # Run tests
+npm run lint     # Run ESLint
+```
 
 ---
 
-# 📘 License
+## 📧 Contact
 
-MIT
+For environment variables (`.env` file), please contact:
+- **Email:** [YOUR_EMAIL]
+- **Discord:** [YOUR_DISCORD]
 
 ---
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+---
+
+**Made with 💚 by SmokeLess AI Team**
