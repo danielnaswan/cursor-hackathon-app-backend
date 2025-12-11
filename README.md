@@ -1,4 +1,4 @@
-# 🚭 Kurangisap — Backend API
+# 🚭 kurange-sap — Backend API
 
 AI-powered behavioral analytics system that helps users track and reduce smoking/vaping habits. Users log vaping/smoking events manually, and the system generates **AI-driven usage analytics, craving predictions, and personalized habit-reduction coaching.**
 
